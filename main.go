@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -16,6 +18,12 @@ type Movie struct {
 type Director struct {
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
+}
+
+func getMovies(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(movies)
+
 }
 
 var movies []Movie
@@ -42,5 +50,6 @@ func main() {
 	r.HandleFunc("/movies/{id}", updateMovies).Methods("PUT")
 	r.HandleFunc("/moviles/{id}", deleteMovie).Methods("DELETE")
 
+	fmt.Println("Server running on port 8000")
 	http.ListenAndServe(":8000", r)
 }
