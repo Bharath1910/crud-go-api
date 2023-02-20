@@ -21,6 +21,20 @@ type Director struct {
 var movies []Movie
 
 func main() {
+	movies = append(movies, Movie{
+		ID: "1", Isbn: "69",
+		Title: "Movie One",
+		Director: &Director{
+			FirstName: "alex",
+			LastName:  "bob"}})
+
+	movies = append(movies, Movie{
+		ID: "2", Isbn: "420",
+		Title: "Movie Two",
+		Director: &Director{
+			FirstName: "foo",
+			LastName:  "bar"}})
+
 	r := mux.NewRouter()
 	r.HandleFunc("/movies", getMovies).Methods("GET")
 	r.HandleFunc("/movies/{id}", getMovies).Methods("GET")
